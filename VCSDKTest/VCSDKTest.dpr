@@ -12,26 +12,65 @@ library VCSDKTest;
 
 uses
   System.SysUtils,
-  System.Classes;
+  System.Classes,
+  Winapi.Windows;
 
 {$R *.res}
 
 {$LINK 'vdapi.obj'}
 
-procedure Load; cdecl; external name '_Load';
-procedure _g_hICAEng; cdecl;
+procedure _Load; stdcall; external name '_Load';
+
+procedure Log(const AMsg: string);
+begin
+  OutputDebugString(PChar('TEST Citrix VC SDK: ' + AMsg));
+end;
+
+procedure Load;
+begin
+  Log('Hooray - Citrix called exported Load function');
+  _Load;
+end;
+
+procedure _g_hICAEng; stdcall;
 begin
 
 end;
 
-procedure _DriverOpen; cdecl; external name '_DriverOpen@12';
-procedure _DriverClose; cdecl; external name '_DriverClose@12';
-procedure _DriverInfo; cdecl; external name '_DriverInfo@12';
-procedure _DriverPoll; cdecl; external name '_DriverPoll@12';
-procedure _DriverQueryInformation; cdecl; external name '_DriverQueryInformation@12';
-procedure _DriverSetInformation; cdecl; external name '_DriverSetInformation@12';
-procedure _DriverGetLastError; cdecl; external name '_DriverGetLastError@8';
+procedure _DriverOpen; stdcall;
+begin
 
+end;
+
+procedure _DriverClose; stdcall;
+begin
+
+end;
+
+procedure _DriverInfo; stdcall;
+begin
+
+end;
+
+procedure _DriverPoll; stdcall; stdcall;
+begin
+
+end;
+
+procedure _DriverQueryInformation; stdcall;
+begin
+
+end;
+
+procedure _DriverSetInformation; stdcall;
+begin
+
+end;
+
+procedure _DriverGetLastError; stdcall;
+begin
+
+end;
 
 begin
 end.
