@@ -15,55 +15,13 @@ library VCSDKTest;
 {$LINK 'vdapi.obj'}
 
 uses
-  System.SysUtils, System.IOUtils, System.Classes,
+  System.SysUtils, System.Classes,
   Winapi.Windows;
-
-type
-  TFileWriter = class(TStreamWriter)
-  private
-    FStream: TStream;
-  public
-    constructor Create(const Filename: string; Append: Boolean = False); overload; virtual;
-    destructor Destroy; override;
-  end;
-
-{ TFileWriter }
-
-constructor TFileWriter.Create(const Filename: string; Append: Boolean);
-var
-  LShareMode: Word;
-begin
-  if TOSVersion.Platform <> TOSVersion.TPlatform.pfiOS then
-    LShareMode := fmShareDenyWrite
-  else
-    LShareMode := 0;
-  if (not TFile.Exists(Filename)) or (not Append) then
-    FStream := TFileStream.Create(Filename, fmCreate or LShareMode)
-  else
-  begin
-    FStream := TFileStream.Create(Filename, fmOpenWrite or LShareMode);
-    FStream.Seek(0, soEnd);
-  end;
-  inherited Create(FStream);
-end;
-
-destructor TFileWriter.Destroy;
-begin
-  FStream.Free;
-  inherited;
-end;
-
-var
-  FLog: TFileWriter;
 
 procedure _Load; stdcall; external name '_Load';
 
 procedure Log(const AMsg: string);
 begin
-  if FLog = nil then
-    FLog := TFileWriter.Create('C:\Temp\WSTest.log', True);
-  FLog.AutoFlush := True;
-  FLog.WriteLine(FormatDateTime('yyyy/mm/dd hh:nn:ss.zzz', Now) + ' TEST Citrix VC SDK: ' + AMsg);
   OutputDebugString(PChar('TEST Citrix VC SDK: ' + AMsg));
 end;
 
@@ -80,7 +38,7 @@ end;
 
 procedure _DriverOpen; stdcall;
 begin
-
+  Log('Citrix called _DriverOpen function');
 end;
 
 procedure _DriverClose; stdcall;
@@ -90,27 +48,27 @@ end;
 
 procedure _DriverInfo; stdcall;
 begin
-
+  Log('Citrix called _DriverInfo function');
 end;
 
-procedure _DriverPoll; stdcall; stdcall;
+procedure _DriverPoll; stdcall;
 begin
-
+  Log('Citrix called _DriverPoll function');
 end;
 
 procedure _DriverQueryInformation; stdcall;
 begin
-
+  Log('Citrix called _DriverQueryInformation function');
 end;
 
 procedure _DriverSetInformation; stdcall;
 begin
-
+  Log('Citrix called _DriverSetInformation function');
 end;
 
 procedure _DriverGetLastError; stdcall;
 begin
-
+  Log('Citrix called _DriverGetLastError function');
 end;
 
 exports
