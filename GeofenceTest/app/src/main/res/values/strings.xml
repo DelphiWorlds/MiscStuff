@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GeofenceTest</string>
+    <string name="startButtonText">Start</string>
+    <string name="stop">Stop</string>
+    <string name="stopButtonText">Stop</string>
+    <string name="clearButtonText">Clear</string>
+    <string name="mockButtonText">Mock</string>
+</resources>
