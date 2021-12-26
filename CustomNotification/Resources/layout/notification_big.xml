@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textColor="#FFF"
-        android:textSize="14sp" />
+        style="@style/TextAppearance.Compat.Notification.Title" />
     <ImageView android:id="@+id/notification_big_image"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
@@ -19,6 +18,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Body"
-        android:textColor="#FFF"
-        android:textSize="14sp" />
+        style="@style/TextAppearance.Compat.Notification" />
 </LinearLayout>
