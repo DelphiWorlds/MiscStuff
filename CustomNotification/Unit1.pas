@@ -55,28 +55,33 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 var
   LBuilder: JNotificationCompat_Builder;
-  LCustomContent: JRemoteViews;
+  LContentSmall, LContentBig: JRemoteViews;
   LTitle, LBody: string;
-  LIconId, LResId: Integer;
 begin
   LTitle := 'Testing';
-  LBody := 'A whole buncho text'; // or will be, later
+  LBody := 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
+    'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
+    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' +
+    'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
 
-  LCustomContent := TJRemoteViews.JavaClass.init(TAndroidHelper.Context.getPackageName, TAndroidHelper.GetResourceID('layout/notification_big'));
-  LResId := TAndroidHelper.GetResourceID('id/notification_big_title');
-  Log.d('ResId: %d', [LResId]);
-  LCustomContent.setTextViewText(LResId, StrToJCharSequence(LTitle));
-  LCustomContent.setTextViewText(TAndroidHelper.GetResourceID('id/notification_big_body'), StrToJCharSequence(LBody));
-  LCustomContent.setImageViewBitmap(TAndroidHelper.GetResourceID('id/notification_big_image'), Image.Bitmap.ToJBitmap);
+  LContentBig := TJRemoteViews.JavaClass.init(TAndroidHelper.Context.getPackageName, TAndroidHelper.GetResourceID('layout/notification_big'));
+  LContentBig.setTextViewText(TAndroidHelper.GetResourceID('id/notification_big_title'), StrToJCharSequence(LTitle));
+  LContentBig.setTextViewText(TAndroidHelper.GetResourceID('id/notification_big_body'), StrToJCharSequence(LBody));
+  LContentBig.setImageViewBitmap(TAndroidHelper.GetResourceID('id/notification_big_image'), Image.Bitmap.ToJBitmap);
 
-  LIconId := TAndroidHelper.GetResourceID('drawable/ic_notification');
+  LContentSmall := TJRemoteViews.JavaClass.init(TAndroidHelper.Context.getPackageName, TAndroidHelper.GetResourceID('layout/notification_small'));
+  LContentSmall.setTextViewText(TAndroidHelper.GetResourceID('id/notification_small_title'), StrToJCharSequence(LTitle));
+  LContentSmall.setTextViewText(TAndroidHelper.GetResourceID('id/notification_small_body'), StrToJCharSequence(LBody));
+  LContentSmall.setImageViewBitmap(TAndroidHelper.GetResourceID('id/notification_small_image'), Image.Bitmap.ToJBitmap);
+
   LBuilder := TJNotificationCompat_Builder.JavaClass.init(TAndroidHelper.Context)
     .setChannelId(StringToJString('CNTest'))
-    .setSmallIcon(LIconId)
-    .setCustomContentView(LCustomContent)
+    .setSmallIcon(TAndroidHelper.GetResourceID('drawable/ic_notification'))
+    .setCustomContentView(LContentSmall)
+    .setCustomBigContentView(LContentBig)
     .setStyle(TJNotificationCompat_DecoratedCustomViewStyle.JavaClass.init)
     .setContentTitle(StrToJCharSequence(LTitle))
-    .setContentText(StrToJCharSequence('A whole buncho text'));
+    .setContentText(StrToJCharSequence(LBody));
   TAndroidHelperEx.NotificationManager.notify(1234, LBuilder.build);
 end;
 

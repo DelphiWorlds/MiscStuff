@@ -4,19 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="256dp"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="8dp" >
+    android:orientation="vertical">
     <TextView android:id="@+id/notification_big_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
-        style="@style/TextAppearance.Compat.Notification.Title" />
+        style="@android:style/TextAppearance.Material.Notification.Title" />
     <ImageView android:id="@+id/notification_big_image"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="100dp" 
+        android:adjustViewBounds="true" />
     <TextView android:id="@+id/notification_big_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Body"
-        style="@style/TextAppearance.Compat.Notification" />
+        android:ellipsize="end"
+        android:maxLines="5"
+        style="@android:style/TextAppearance.Material.Notification" />
 </LinearLayout>
